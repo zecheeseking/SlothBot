@@ -2,6 +2,7 @@
 ```
 TOKEN=
 COMMAND_PREFIX=$
+ALLOWED_CHANNEL_IDS=xxxx,yyyyy
 ```
 
 # Commands

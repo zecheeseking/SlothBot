@@ -12,6 +12,8 @@ Object.keys(botCommands).map(key => {
 
 client.cooldowns = new Discord.Collection();
 
+const allowedChannels = process.env.ALLOWED_CHANNEL_IDS.split(',');
+
 client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 });
@@ -27,6 +29,10 @@ client.on('message', msg => {
 	if (!client.commands.has(commandName)) return;
 
 	const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+
+	if (!validateChannel(msg)) {
+		return;
+	}
 
 	if (!validatePermission(command, msg)) {
 		return;
@@ -52,11 +58,20 @@ client.on('message', msg => {
 client.login(process.env.TOKEN);
 
 
+function validateChannel(msg) {
+	if (allowedChannels.includes(msg.channel.id)) {
+		return true;
+	}
+
+	console.log('Command not allowed in this channel');
+	return false;
+}
+
 function validatePermission(command, msg) {
 	if (command.permissions) {
 		const authorPerms = msg.channel.permissionsFor(msg.author);
 		if (!authorPerms || !authorPerms.has(command.permissions)) {
-			msg.reply('You can not do this!');
+			msg.reply('You don\'t have the permission!');
 
 			return false;
 		}
