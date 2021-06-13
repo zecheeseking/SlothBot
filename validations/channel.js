@@ -1,10 +1,10 @@
 module.exports = {
-	validate(allowedChannels, msg, commandName) {
-		if (allowedChannels.includes(msg.channel.id)) {
+	validate(allowedChannels, message, commandName) {
+		if (allowedChannels.includes(message.channel.id)) {
 			return true;
 		}
 
-		console.log(`Command ${commandName} not allowed in this channel`);
+		console.log(`Command '${commandName}' not allowed in this channel`);
 		return false;
 	},
 };

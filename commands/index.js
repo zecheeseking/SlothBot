@@ -1,4 +1,5 @@
 module.exports = {
-	Ping: require('./ping'),
-	Help: require('./help'),
+	ping: require('./ping'),
+	help: require('./help'),
+	hltb: require('./hltb'),
 };

@@ -1,11 +1,11 @@
 module.exports = {
-	validate(command, args, msg) {
+	validate(command, args, message) {
 		if (command.args && !args.length) {
 			let reply = 'You didn\'t provide any arguments!';
 			if (command.usage) {
 				reply += `\nThe proper usage would be: '${process.env.COMMAND_PREFIX}${command.name} ${command.usage}'.`;
 			}
-			msg.reply(reply);
+			message.reply(reply);
 
 			return false;
 		}

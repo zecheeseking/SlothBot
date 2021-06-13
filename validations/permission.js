@@ -1,9 +1,9 @@
 module.exports = {
-	validate(permissions, msg) {
+	validate(permissions, message) {
 		if (permissions) {
-			const authorPerms = msg.channel.permissionsFor(msg.author);
+			const authorPerms = message.channel.permissionsFor(message.author);
 			if (!authorPerms || !authorPerms.has(permissions)) {
-				msg.reply('You don\'t have the permission!');
+				message.reply('You don\'t have the permission!');
 
 				return false;
 			}
