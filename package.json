@@ -12,6 +12,7 @@
   },
   "scripts": {
     "test": "eslint --ignore-path .gitignore .",
+    "lintfix": "eslint --fix  --ignore-path .gitignore .",
     "start": "node index.js"
   }
 }

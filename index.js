@@ -5,10 +5,11 @@ const client = new Discord.Client();
 
 client.commands = new Discord.Collection();
 const botCommands = require('./commands');
-
 Object.keys(botCommands).map(key => {
 	client.commands.set(process.env.COMMAND_PREFIX + botCommands[key].name, botCommands[key]);
 });
+
+const validations = require('./validations');
 
 client.cooldowns = new Discord.Collection();
 
@@ -30,19 +31,22 @@ client.on('message', msg => {
 
 	const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
-	if (!validateChannel(msg)) {
+	if (!validations.channel.validate(allowedChannels, msg, commandName)) {
 		return;
 	}
 
-	if (!validatePermission(command, msg)) {
+	if (!validations.permission.validate(command.permissions, msg)) {
 		return;
 	}
 
-	if (!validateArgs(command, args, msg)) {
+	if (!validations.args.validate(command, args, msg)) {
 		return;
 	}
 
-	if (!validateCooldown(client.cooldowns, command, msg)) {
+	if (!client.cooldowns.has(command.name)) {
+		client.cooldowns.set(command.name, new Discord.Collection());
+	}
+	if (!validations.cooldown.validate(client.cooldowns, command, msg)) {
 		return;
 	}
 
@@ -56,66 +60,3 @@ client.on('message', msg => {
 });
 
 client.login(process.env.TOKEN);
-
-
-function validateChannel(msg) {
-	if (allowedChannels.includes(msg.channel.id)) {
-		return true;
-	}
-
-	console.log('Command not allowed in this channel');
-	return false;
-}
-
-function validatePermission(command, msg) {
-	if (command.permissions) {
-		const authorPerms = msg.channel.permissionsFor(msg.author);
-		if (!authorPerms || !authorPerms.has(command.permissions)) {
-			msg.reply('You don\'t have the permission!');
-
-			return false;
-		}
-	}
-
-	return true;
-}
-
-function validateArgs(command, args, msg) {
-	if (command.args && !args.length) {
-		let reply = 'You didn\'t provide any arguments!';
-		if (command.usage) {
-			reply += `\nThe proper usage would be: '${process.env.COMMAND_PREFIX}${command.name} ${command.usage}'.`;
-		}
-		msg.reply(reply);
-
-		return false;
-	}
-
-	return true;
-}
-
-function validateCooldown(cooldowns, command, msg) {
-	if (!cooldowns.has(command.name)) {
-		cooldowns.set(command.name, new Discord.Collection());
-	}
-
-	const now = Date.now();
-	const timestamps = cooldowns.get(command.name);
-	const cooldownAmount = (command.cooldown || 3) * 1000;
-
-	if (timestamps.has(msg.author.id)) {
-		const expirationTime = timestamps.get(msg.author.id) + cooldownAmount;
-
-		if (now < expirationTime) {
-			const timeLeft = (expirationTime - now) / 1000;
-			msg.reply(`Please wait ${timeLeft.toFixed(1)} more seconds before reusing the '${command.name}' command.`);
-
-			return false;
-		}
-	}
-
-	timestamps.set(msg.author.id, now);
-	setTimeout(() => timestamps.delete(msg.author.id), cooldownAmount);
-
-	return true;
-}
