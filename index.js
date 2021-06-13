@@ -25,7 +25,7 @@ client.on('message', message => {
 	const args = message.content.trim().split(/ +/);
 	const commandName = args.shift().substring(1).toLowerCase();
 
-	console.info(`Called command: ${commandName}`);
+	console.info(`Called command: ${commandName} ${args.join(' ')}`);
 
 	const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 

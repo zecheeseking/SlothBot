@@ -1,16 +1,20 @@
-module.exports.searchService = async function(message, searchQuery, searchResults) {
+module.exports.searchService = async function(message, searchResults, resultIndex) {
 	return new Promise((resolve) => {
-		let prompt = `There are ${searchResults.length} results for ${searchQuery}, please pick one:\n`;
+		let prompt = `There are ${searchResults.length} results, please pick one:\n`;
 		searchResults.every((value, index) => {
-			prompt += `\n${(index + 1)}: ${value.name}`;
+			prompt += `\n${(index + 1)}: ${value[resultIndex]}`;
 
-			return index <= 19;
+			if (index === 19) {
+				prompt += '\n...';
+				return false;
+			}
+			return true;
 		});
 
 		message.channel.send(prompt);
 
 		const filter = m => m.author.id === message.author.id;
-		const collector = message.channel.createmessageCollector(filter, { time: 15000 });
+		const collector = message.channel.createMessageCollector(filter, { time: 10000 });
 
 		collector.on('collect', m => {
 			const choice = Number.parseInt(m) - 1;

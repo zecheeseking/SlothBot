@@ -5,9 +5,10 @@ const { searchService } = require('../services/searchService');
 
 module.exports = {
 	name: 'hltb',
-	description: 'Shows times for a game from https://howlongtobeat.com/',
+	description: 'Shows times for a game from <https://howlongtobeat.com/>',
 	aliases: ['howlongtobeat'],
 	args: true,
+	cooldown: 10,
 	usage: '<name of game>',
 	async execute(message, args) {
 		const game = args.join(' ');
@@ -23,7 +24,7 @@ module.exports = {
 			return message.reply(`No results for '${game}'.`);
 		}
 		if (results.length > 1) {
-			result = await searchService(message, game, results);
+			result = await searchService(message, results, 'name');
 		}
 		if (results.length === 1) {
 			result = results[0];
@@ -60,7 +61,8 @@ module.exports = {
 			.setColor(0x91244e)
 			.setAuthor(result.name, 'https://howlongtobeat.com' + result.imageUrl)
 			.setDescription(`https://howlongtobeat.com/game.php?id=${result.id}`)
-			.setThumbnail('https://howlongtobeat.com' + result.imageUrl);
+			.setThumbnail('https://howlongtobeat.com' + result.imageUrl)
+			.setFooter('Powered by HLTB');
 
 		timeFields.map(field => {
 			embed.addField(field.name, field.value);
