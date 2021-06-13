@@ -63,7 +63,7 @@ module.exports = {
 			.addField('DRM', '\u200B' + entry.price.drm.join(', '), true)
 			.addField('URL', entry.price.url, true)
 			.addField('Historical Low:', '\u200B', false)
-			.addField('Price:', entry.lowest.price_formatted, true)
+			.addField('Price', entry.lowest.price_formatted, true)
 			.addField('Discount', entry.lowest.cut + '%', true)
 			.addField('Store', entry.lowest.store, true)
 			.addField('Recorded on', entry.lowest.recorded_formatted, true)
