@@ -4,7 +4,7 @@ module.exports.searchService = async function(message, searchResults, resultInde
 		searchResults.every((value, index) => {
 			prompt += `\n${(index + 1)}: ${value[resultIndex]}`;
 
-			if (index === 19) {
+			if (index > 19) {
 				prompt += '\n...';
 				return false;
 			}

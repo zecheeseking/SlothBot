@@ -8,7 +8,6 @@ module.exports = {
 	description: 'Shows times for a game from <https://howlongtobeat.com/>',
 	aliases: ['howlongtobeat'],
 	args: true,
-	cooldown: 10,
 	usage: '<name of game>',
 	async execute(message, args) {
 		const game = args.join(' ');
