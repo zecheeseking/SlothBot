@@ -15,7 +15,7 @@ ITAD_APIKEY=
 # Commands
 
 ### ping
-Checks if bot is logged in and working. Should reply with "pong"
+Checks if bot is logged in and working. Should reply.
 
 ### help
 Sends a DM with all available commands and how they are used
