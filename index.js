@@ -59,4 +59,14 @@ client.on('message', message => {
 	}
 });
 
+client.on('guildMemberUpdate', async (beforeUpdateMember, afterUpdateMember) => {
+	if (!beforeUpdateMember.pending || afterUpdateMember.pending) return;
+
+	console.log(`assigning ${afterUpdateMember.user.tag} Verified role...`);
+
+	const verifiedRole = afterUpdateMember.guild.roles.cache.find(role => role.name === 'Verified');
+
+	await afterUpdateMember.roles.add(verifiedRole);
+});
+
 client.login(process.env.TOKEN);
