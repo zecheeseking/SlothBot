@@ -59,7 +59,7 @@ client.on('message', message => {
 	}
 });
 
-/*client.on('guildMemberUpdate', async (oldMember, newMember) => {
+/* client.on('guildMemberUpdate', async (oldMember, newMember) => {
 	console.log(oldMember);
 	if (!oldMember.pending || newMember.pending) return;
 
@@ -67,6 +67,6 @@ client.on('message', message => {
 
 	const verifiedRole = newMember.guild.roles.cache.find(role => role.name === 'Verified');
 	await newMember.roles.add(verifiedRole);
-});*/
+}); */
 
 client.login(process.env.TOKEN);
