@@ -19,6 +19,10 @@ module.exports = {
 			.catch(error => console.error(error));
 		let result;
 
+		if (typeof (results) === 'undefined') {
+			return message.reply('Unknown problem fetching the data from hltb.');
+		}
+
 		if (results.length <= 0) {
 			return message.reply(`No results for '${game}'.`);
 		}
