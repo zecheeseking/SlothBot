@@ -41,7 +41,7 @@ module.exports = {
 			return;
 		}
 
-		const timeFields = [];
+		/*const timeFields = [];
 		result.timeLabels.forEach(label => {
 			let val = result[label[0]];
 			if (val === 0) {
@@ -58,7 +58,7 @@ module.exports = {
 				name: label[1],
 				value: `${val}`,
 			});
-		});
+		});*/
 
 		const embed = new Discord.MessageEmbed()
 			.setColor(0x91244e)
@@ -67,9 +67,9 @@ module.exports = {
 			.setThumbnail('https://howlongtobeat.com' + result.imageUrl)
 			.setFooter('Powered by HLTB');
 
-		timeFields.map(field => {
+		/*timeFields.map(field => {
 			embed.addField(field.name, field.value);
-		});
+		});*/
 
 		message.reply('', embed);
 	},
