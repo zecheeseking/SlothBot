@@ -21,7 +21,7 @@ module.exports = {
 
 		const replyEmbed = new Discord.MessageEmbed()
 			.setColor(0x91244e)
-			.setAuthor('Search result for "'+game+'"', 'https://cdn.discordapp.com/app-icons/852456102502465565/0efcc65e28c18994c3191484a39c2c49.png?size=256');
+			.setAuthor('Search result for "' + game + '"', 'https://cdn.discordapp.com/app-icons/852456102502465565/0efcc65e28c18994c3191484a39c2c49.png?size=256');
 
 		if (game.length < 3) {
 			return message.reply('', replyEmbed.setDescription('Search query too short.'));
@@ -63,9 +63,9 @@ module.exports = {
 			.addField('Price', entry.price.price_formatted, true)
 			.addField('Discount', entry.price.cut + '%', true)
 			.addField('Store', entry.price.store, true)
-			//.addField('DRM', '\u200B' + entry.price.drm.join(', '), true)
+			// .addField('DRM', '\u200B' + entry.price.drm.join(', '), true)
 			.addField('URL', entry.price.url, false)
-			//.addField('\u200B', '\u200B')
+			// .addField('\u200B', '\u200B')
 			.addField('Historical Low', entry.lowest.price_formatted, true)
 			.addField('Historical Low Discount', entry.lowest.cut + '%', true)
 			.addField('Historical Low Store', entry.lowest.store, true)

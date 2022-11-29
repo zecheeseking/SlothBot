@@ -1,9 +1,9 @@
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 module.exports.searchService = async function(message, searchResults, resultIndex, game) {
 	return new Promise((resolve) => {
 		const replyEmbed = new Discord.MessageEmbed()
 			.setColor(0x91244e)
-			.setAuthor('Search result for "'+game+'"', 'https://cdn.discordapp.com/app-icons/852456102502465565/0efcc65e28c18994c3191484a39c2c49.png?size=256');
+			.setAuthor('Search result for "' + game + '"', 'https://cdn.discordapp.com/app-icons/852456102502465565/0efcc65e28c18994c3191484a39c2c49.png?size=256');
 
 		let prompt = `There are ${searchResults.length} results, please pick one:\n`;
 		searchResults.every((value, index) => {

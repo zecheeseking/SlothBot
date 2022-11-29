@@ -14,7 +14,7 @@ module.exports = {
 
 		const replyEmbed = new Discord.MessageEmbed()
 			.setColor(0x91244e)
-			.setAuthor('Search result for "'+game+'"', 'https://cdn.discordapp.com/app-icons/852456102502465565/0efcc65e28c18994c3191484a39c2c49.png?size=256');
+			.setAuthor('Search result for "' + game + '"', 'https://cdn.discordapp.com/app-icons/852456102502465565/0efcc65e28c18994c3191484a39c2c49.png?size=256');
 
 		if (game.length < 3) {
 			return message.reply('', replyEmbed.setDescription('Search query too short.'));
@@ -53,7 +53,7 @@ module.exports = {
 		const timeFields = [
 			{ name: result.timeLabels[0][0], value: result.gameplayMain },
 			{ name: result.timeLabels[1][0], value: result.gameplayMainExtra },
-			{ name: result.timeLabels[1][0], value: result.gameplayCompletionist }
+			{ name: result.timeLabels[1][0], value: result.gameplayCompletionist },
 		];
 
 		timeFields.map(field => {
