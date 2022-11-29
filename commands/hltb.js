@@ -11,8 +11,13 @@ module.exports = {
 	usage: '<name of game>',
 	async execute(message, args) {
 		const game = args.join(' ');
+
+		const replyEmbed = new Discord.MessageEmbed()
+			.setColor(0x91244e)
+			.setAuthor('Search result for "'+game+'"', 'https://cdn.discordapp.com/app-icons/852456102502465565/0efcc65e28c18994c3191484a39c2c49.png?size=256');
+
 		if (game.length < 3) {
-			return message.reply('Search query too short.');
+			return message.reply('', replyEmbed.setDescription('Search query too short.'));
 		}
 
 		const results = await hltbService.search(game)
@@ -20,57 +25,41 @@ module.exports = {
 		let result;
 
 		if (typeof (results) === 'undefined') {
-			return message.reply('Unknown problem fetching the data from hltb.');
+			return message.reply('', replyEmbed.setDescription('Unknown problem fetching the data from hltb.'));
 		}
 
 		if (results.length <= 0) {
-			return message.reply(`No results for '${game}'.`);
+			return message.reply('', replyEmbed.setDescription('No results.'));
 		}
+
 		if (results.length > 1) {
-			result = await searchService(message, results, 'name');
+			result = await searchService(message, results, 'name', game);
 		}
 		if (results.length === 1) {
 			result = results[0];
 		}
 
-		if (typeof (result) === 'undefined') {
-			return message.reply('Unknown problem fetching the data from hltb.');
+		if (typeof (result) === 'undefined' || result === null) {
+			return message.reply('', replyEmbed.setDescription('Unknown problem fetching the data from hltb.'));
 		}
 
-		if (result === null) {
-			return;
-		}
-
-		/*const timeFields = [];
-		result.timeLabels.forEach(label => {
-			let val = result[label[0]];
-			if (val === 0) {
-				val = ' - ';
-			}
-			else if (val % 1 === 0.5) {
-				const full = Math.floor(val);
-				val = `${full} ½ Hours`;
-			}
-			else {
-				val = `${val} Hours`;
-			}
-			timeFields.push({
-				name: label[1],
-				value: `${val}`,
-			});
-		});*/
-
-		const embed = new Discord.MessageEmbed()
+		const resultEmbed = new Discord.MessageEmbed()
 			.setColor(0x91244e)
-			.setAuthor(result.name, 'https://howlongtobeat.com' + result.imageUrl)
+			.setAuthor(result.name, 'https://cdn.discordapp.com/app-icons/852456102502465565/0efcc65e28c18994c3191484a39c2c49.png?size=256')
 			.setDescription(`https://howlongtobeat.com/game.php?id=${result.id}`)
-			.setThumbnail('https://howlongtobeat.com' + result.imageUrl)
+			.setThumbnail(result.imageUrl)
 			.setFooter('Powered by HLTB');
 
-		/*timeFields.map(field => {
-			embed.addField(field.name, field.value);
-		});*/
+		const timeFields = [
+			{ name: result.timeLabels[0][0], value: result.gameplayMain },
+			{ name: result.timeLabels[1][0], value: result.gameplayMainExtra },
+			{ name: result.timeLabels[1][0], value: result.gameplayCompletionist }
+		];
 
-		message.reply('', embed);
+		timeFields.map(field => {
+			resultEmbed.addField(field.name, field.value);
+		});
+
+		message.reply('', resultEmbed);
 	},
 };
