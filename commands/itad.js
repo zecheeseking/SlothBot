@@ -66,9 +66,9 @@ module.exports = {
 			// .addField('DRM', '\u200B' + entry.price.drm.join(', '), true)
 			.addField('URL', entry.price.url, false)
 			// .addField('\u200B', '\u200B')
-			.addField('Historical Low', entry.lowest.price_formatted, true)
-			.addField('Historical Low Discount', entry.lowest.cut + '%', true)
-			.addField('Historical Low Store', entry.lowest.store, true)
+			.addField('Historical Low', entry.lowest.price_formatted, false)
+			.addField('Discount', entry.lowest.cut + '%', true)
+			.addField('Store', entry.lowest.store, true)
 			.addField('Recorded', entry.lowest.recorded_formatted, true)
 			.setFooter('Powered by ITAD');
 
