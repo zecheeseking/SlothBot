@@ -53,7 +53,7 @@ module.exports = {
 		const timeFields = [
 			{ name: result.timeLabels[0][0], value: result.gameplayMain },
 			{ name: result.timeLabels[1][0], value: result.gameplayMainExtra },
-			{ name: result.timeLabels[1][0], value: result.gameplayCompletionist },
+			{ name: result.timeLabels[2][0], value: result.gameplayCompletionist },
 		];
 
 		timeFields.map(field => {
