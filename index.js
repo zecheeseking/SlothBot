@@ -1,5 +1,6 @@
 require('dotenv').config();
 const Discord = require('discord.js');
+const { quarantineFiltersService } = require('./services/quarantineFiltersService');
 
 const client = new Discord.Client({ 'intents': [
 	Discord.GatewayIntentBits.Guilds,
@@ -23,6 +24,11 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', message => {
+	quarantineFiltersService.filtersList.forEach(element => {
+		if(message.content.includes(element))
+			return message.reply(`Oh no you've been a naughty impatient sinner UwU.`);
+	});
+	
 	if (!message.content.startsWith(process.env.COMMAND_PREFIX)) return;
 
 	const args = message.content.trim().split(/ +/);
