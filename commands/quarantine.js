@@ -1,3 +1,4 @@
+const { quarantineFiltersService } = require('../services/quarantineFiltersService');
 module.exports = {
 	name: 'quarantine',
 	description: 'Creates a thread and sets up automatic redirects for the specified game.',
@@ -14,9 +15,12 @@ module.exports = {
 			return message.reply('', replyEmbed.setDescription('Could not find impatient quarantine channel. did you set the ID?'));
         }
 
-        const thread = await impatientChannel.threads.create({
+        await impatientChannel.threads.create({
             name: `${game}`,
             reason: `Quarantine thread for ${game}`,
+        })
+        .then(thread => {
+            quarantineFiltersService.addFilter(`${game}`);
         })
         .catch(error => console.log(error));
 
