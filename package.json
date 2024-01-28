@@ -5,7 +5,7 @@
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
     "erlpack": "^0.1.3",
-    "howlongtobeat": "d0ctr/howlongtobeat",
+    "howlongtobeat": "ckatzorke/howlongtobeat",
     "igdb-api-node": "^5.0.2",
     "utf-8-validate": "^5.0.10",
     "zlib-sync": "^0.1.7"
