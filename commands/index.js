@@ -3,4 +3,5 @@ module.exports = {
 	help: require('./help'),
 	hltb: require('./hltb'),
 	itad: require('./itad'),
+	quarantine: require('./quarantine'),
 };
