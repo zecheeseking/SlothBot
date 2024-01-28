@@ -1,7 +1,10 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 
-const client = new Discord.Client();
+const client = new Discord.Client({ 'intents': [
+	Discord.GatewayIntentBits.Guilds,
+	Discord.GatewayIntentBits.GuildMessages,
+	Discord.GatewayIntentBits.MessageContent]});
 
 client.commands = new Discord.Collection();
 const botCommands = require('./commands');
@@ -19,7 +22,7 @@ client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', message => {
+client.on('messageCreate', message => {
 	if (!message.content.startsWith(process.env.COMMAND_PREFIX)) return;
 
 	const args = message.content.trim().split(/ +/);
