@@ -28,8 +28,14 @@ client.on('messageCreate', message => {
 		if(message.content.includes(element))
 			return message.reply(`Oh no you've been a naughty impatient sinner UwU.`);
 	});
-	
-	if (!message.content.startsWith(process.env.COMMAND_PREFIX)) return;
+
+	if(quarantineFiltersService.checkfilters(message)){
+		return;
+	}
+
+	if (!message.content.startsWith(process.env.COMMAND_PREFIX)) {
+		return;
+	}
 
 	const args = message.content.trim().split(/ +/);
 	const commandName = args.shift().substring(1).toLowerCase();

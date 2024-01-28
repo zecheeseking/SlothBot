@@ -20,10 +20,8 @@ module.exports = {
             reason: `Quarantine thread for ${game}`,
         })
         .then(thread => {
-            quarantineFiltersService.addFilter(`${game}`);
+            quarantineFiltersService.addFilter(`${game}`, thread.id);
         })
         .catch(error => console.log(error));
-
-		message.reply(`I will quarantine ${game} eventually!`);
 	},
 };
