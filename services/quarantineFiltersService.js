@@ -3,9 +3,16 @@ module.exports.quarantineFiltersService = {
     addFilter(gameName, threadid){
         this.filtersList.push({
             game: gameName,
-            alias: [],
+            aliases: [],
             quarantineThreadid: threadid
         });
+    },
+    addAlias(game, alias){
+        this.filtersList.forEach(filter => {
+            if(filter.game === game){
+                filter.alias.push(alias);
+                return;
+            }});
     },
     checkfilters(message){
         if(message.content.startsWith(process.env.COMMAND_PREFIX))
@@ -17,7 +24,7 @@ module.exports.quarantineFiltersService = {
                 return true;
             }
 
-            filter.alias.forEach(alias => {
+            filter.aliases.forEach(alias => {
                 if(message.content.includes(alias)){
                     message.reply(`Oh no you've been a naughty impatient sinner UwU.`);
                     return true;
