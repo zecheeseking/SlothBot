@@ -1,7 +1,7 @@
 const { quarantineFiltersService } = require('../services/quarantineFiltersService');
 module.exports = {
-	name: 'quarantine',
-	description: 'Creates a thread and sets up automatic redirects for the specified game.',
+	name: 'addalias',
+	description: 'Adds an additional alias that will trigger the filter if mentioned in a message.',
 	aliases: [],
     args: true,
 	usage: '',
